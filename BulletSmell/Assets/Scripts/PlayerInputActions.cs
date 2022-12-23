@@ -44,6 +44,24 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SprintPress"",
+                    ""type"": ""Button"",
+                    ""id"": ""7be78280-6073-44c6-8a3f-ab68240fcdf8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SprintRelease"",
+                    ""type"": ""Button"",
+                    ""id"": ""6432eb73-c278-4f02-9e49-6b7c35880a4c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -112,6 +130,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ada8dd65-0df1-4bf4-b881-7cdaaa5c12cf"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SprintPress"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""20eeda2e-dc6c-4e22-91d5-7d3f02e64fa9"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SprintRelease"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -122,6 +162,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        m_Player_SprintPress = m_Player.FindAction("SprintPress", throwIfNotFound: true);
+        m_Player_SprintRelease = m_Player.FindAction("SprintRelease", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -183,12 +225,16 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Dash;
+    private readonly InputAction m_Player_SprintPress;
+    private readonly InputAction m_Player_SprintRelease;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
+        public InputAction @SprintPress => m_Wrapper.m_Player_SprintPress;
+        public InputAction @SprintRelease => m_Wrapper.m_Player_SprintRelease;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -204,6 +250,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @SprintPress.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprintPress;
+                @SprintPress.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprintPress;
+                @SprintPress.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprintPress;
+                @SprintRelease.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprintRelease;
+                @SprintRelease.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprintRelease;
+                @SprintRelease.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprintRelease;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -214,6 +266,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
+                @SprintPress.started += instance.OnSprintPress;
+                @SprintPress.performed += instance.OnSprintPress;
+                @SprintPress.canceled += instance.OnSprintPress;
+                @SprintRelease.started += instance.OnSprintRelease;
+                @SprintRelease.performed += instance.OnSprintRelease;
+                @SprintRelease.canceled += instance.OnSprintRelease;
             }
         }
     }
@@ -222,5 +280,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnSprintPress(InputAction.CallbackContext context);
+        void OnSprintRelease(InputAction.CallbackContext context);
     }
 }

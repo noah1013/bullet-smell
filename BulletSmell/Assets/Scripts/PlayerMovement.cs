@@ -8,13 +8,17 @@ public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
     [SerializeField] private float moveSpeed = 5f;
+    private float baseSpeed;
     public PlayerInputActions playerControls;
 
     Vector2 moveDirection = Vector2.zero;
     private InputAction move;
+    private InputAction sprintPress;
+    private InputAction sprintRelease;
     private InputAction dash;
 
     private bool canDash;
+    private bool isSprinting;
 
     private void Awake()
     {
@@ -27,6 +31,14 @@ public class PlayerMovement : MonoBehaviour
         move = playerControls.Player.Move;
         move.Enable();
 
+        sprintPress = playerControls.Player.SprintPress;
+        sprintPress.Enable();
+        sprintPress.performed += SprintPress;
+
+        sprintRelease = playerControls.Player.SprintRelease;
+        sprintRelease.Enable();
+        sprintRelease.performed += SprintRelease;
+
         dash = playerControls.Player.Dash;
         dash.Enable();
         dash.performed += Dash;
@@ -36,6 +48,8 @@ public class PlayerMovement : MonoBehaviour
     {
         playerControls.Enable();
         move.Disable();
+        sprintPress.Disable();
+        sprintRelease.Disable();
         dash.Disable();
     }
 
@@ -43,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         canDash = true;
+        isSprinting = false;
+        baseSpeed = moveSpeed;
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, -90.0f);
     }
 
@@ -56,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         rb.velocity = new Vector2(moveDirection.x, moveDirection.y) * moveSpeed;
+        print(rb.velocity);
     }
 
     void Dash(InputAction.CallbackContext context){
@@ -64,9 +81,22 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void SprintPress(InputAction.CallbackContext context){
+        if(!isSprinting){
+            isSprinting = true;
+            moveSpeed = baseSpeed * 1.5f;
+        }
+    }
+
+    void SprintRelease(InputAction.CallbackContext context){
+        if(isSprinting){
+            moveSpeed = baseSpeed;
+            isSprinting = false;
+        }
+    }
+
     private void ChangePlayerRotation(){
         Vector3 mouse = new Vector3(Input.mousePosition.x - (Screen.width / 2), Input.mousePosition.y - (Screen.height / 2), 0);
-        //print(mouse);
         float hypotenuse = Vector3.Distance(mouse, new Vector3(0.0f, 0.0f, 0.0f));
         float angle = GetAngle(hypotenuse, mouse.x);
 
@@ -87,11 +117,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private IEnumerator DashWait(){
-        float temp = moveSpeed;
         moveSpeed = 20f;
         canDash = false;
         yield return new WaitForSeconds(0.4f);
-        moveSpeed = temp;
+        moveSpeed = baseSpeed;
         canDash = true;
     }
 }
