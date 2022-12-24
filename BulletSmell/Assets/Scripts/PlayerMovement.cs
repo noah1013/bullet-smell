@@ -78,6 +78,7 @@ public class PlayerMovement : MonoBehaviour
     {
         moveDirection = move.ReadValue<Vector2>(); //Player movement 
         ChangePlayerRotation();                    //Player rotation
+        
     }
 
     void FixedUpdate()
@@ -144,7 +145,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator BulletTimeWait(){
         canBulletTime = false;
         float tempBaseSpeed = baseSpeed;   
-        SetTimeScale(0.2f, (1/slowDownRatio), slowDownRatio);
+        SetTimeScale((1/slowDownRatio), (1/slowDownRatio), slowDownRatio);
         print("BULLET TIME ACTIVE (PLAYER NOT AFFECTED)");
         yield return new WaitForSeconds(1); //Replace with meter but for now have a timer coroutine
         SetTimeScale(1f, slowDownRatio, 1/slowDownRatio);    
