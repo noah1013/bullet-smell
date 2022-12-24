@@ -62,6 +62,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BulletTime"",
+                    ""type"": ""Button"",
+                    ""id"": ""07be67a5-ae11-4e12-8870-5639dabc5128"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +161,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""SprintRelease"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""08a8d3ef-a3b1-4fec-9a6f-99e8f182d582"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BulletTime"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +184,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_SprintPress = m_Player.FindAction("SprintPress", throwIfNotFound: true);
         m_Player_SprintRelease = m_Player.FindAction("SprintRelease", throwIfNotFound: true);
+        m_Player_BulletTime = m_Player.FindAction("BulletTime", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -227,6 +248,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_SprintPress;
     private readonly InputAction m_Player_SprintRelease;
+    private readonly InputAction m_Player_BulletTime;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -235,6 +257,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @SprintPress => m_Wrapper.m_Player_SprintPress;
         public InputAction @SprintRelease => m_Wrapper.m_Player_SprintRelease;
+        public InputAction @BulletTime => m_Wrapper.m_Player_BulletTime;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -256,6 +279,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @SprintRelease.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprintRelease;
                 @SprintRelease.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprintRelease;
                 @SprintRelease.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprintRelease;
+                @BulletTime.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBulletTime;
+                @BulletTime.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBulletTime;
+                @BulletTime.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBulletTime;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -272,6 +298,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @SprintRelease.started += instance.OnSprintRelease;
                 @SprintRelease.performed += instance.OnSprintRelease;
                 @SprintRelease.canceled += instance.OnSprintRelease;
+                @BulletTime.started += instance.OnBulletTime;
+                @BulletTime.performed += instance.OnBulletTime;
+                @BulletTime.canceled += instance.OnBulletTime;
             }
         }
     }
@@ -282,5 +311,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnDash(InputAction.CallbackContext context);
         void OnSprintPress(InputAction.CallbackContext context);
         void OnSprintRelease(InputAction.CallbackContext context);
+        void OnBulletTime(InputAction.CallbackContext context);
     }
 }

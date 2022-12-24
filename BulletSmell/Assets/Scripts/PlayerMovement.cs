@@ -7,8 +7,10 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float moveSpeed = 500f;
     private float baseSpeed;
+    private float slowDownRatio = 5f;
+    private float waitTimeMultiplier;
     public PlayerInputActions playerControls;
 
     Vector2 moveDirection = Vector2.zero;
@@ -16,14 +18,16 @@ public class PlayerMovement : MonoBehaviour
     private InputAction sprintPress;
     private InputAction sprintRelease;
     private InputAction dash;
+    private InputAction bulletTime;
+    
 
     private bool canDash;
     private bool isSprinting;
+    private bool canBulletTime;
 
     private void Awake()
     {
-        playerControls = new PlayerInputActions();
-        
+        playerControls = new PlayerInputActions();   
     }
 
     private void OnEnable()
@@ -42,6 +46,10 @@ public class PlayerMovement : MonoBehaviour
         dash = playerControls.Player.Dash;
         dash.Enable();
         dash.performed += Dash;
+
+        bulletTime = playerControls.Player.BulletTime;
+        bulletTime.Enable();
+        bulletTime.performed += BulletTime;
     }
 
     private void OnDisable()
@@ -51,13 +59,16 @@ public class PlayerMovement : MonoBehaviour
         sprintPress.Disable();
         sprintRelease.Disable();
         dash.Disable();
+        bulletTime.Disable();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         canDash = true;
+        canBulletTime = true;
         isSprinting = false;
+        waitTimeMultiplier = 1f;
         baseSpeed = moveSpeed;
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, -90.0f);
     }
@@ -71,27 +82,33 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.velocity = new Vector2(moveDirection.x, moveDirection.y) * moveSpeed;
-        print(rb.velocity);
+        rb.velocity = new Vector2(moveDirection.x * (moveSpeed * Time.deltaTime / Time.timeScale), moveDirection.y * (moveSpeed * Time.deltaTime / Time.timeScale) );
+        //print(rb.velocity);
     }
 
     void Dash(InputAction.CallbackContext context){
         if(canDash){
-            StartCoroutine(DashWait());
+            StartCoroutine(DashWait(0.4f));
         }
     }
 
-    void SprintPress(InputAction.CallbackContext context){
+    private void SprintPress(InputAction.CallbackContext context){
         if(!isSprinting){
             isSprinting = true;
             moveSpeed = baseSpeed * 1.5f;
         }
     }
 
-    void SprintRelease(InputAction.CallbackContext context){
+    private void SprintRelease(InputAction.CallbackContext context){
         if(isSprinting){
             moveSpeed = baseSpeed;
             isSprinting = false;
+        }
+    }
+
+    private void BulletTime(InputAction.CallbackContext context){
+        if(canBulletTime){
+            StartCoroutine(BulletTimeWait());
         }
     }
 
@@ -115,11 +132,30 @@ public class PlayerMovement : MonoBehaviour
         float degrees =  angle * (180f / (float) Math.PI);
         return degrees;
     }
+    
+    private void SetTimeScale(float timeScale, float deltaTime, float newBaseSpeed){
+        Time.timeScale = timeScale;
+        Time.fixedDeltaTime *= deltaTime;
+        baseSpeed *= newBaseSpeed;
+        moveSpeed = baseSpeed;
+        waitTimeMultiplier *= deltaTime;
+    }
 
-    private IEnumerator DashWait(){
-        moveSpeed = 20f;
+    private IEnumerator BulletTimeWait(){
+        canBulletTime = false;
+        float tempBaseSpeed = baseSpeed;   
+        SetTimeScale(0.2f, (1/slowDownRatio), slowDownRatio);
+        print("BULLET TIME ACTIVE (PLAYER NOT AFFECTED)");
+        yield return new WaitForSeconds(1); //Replace with meter but for now have a timer coroutine
+        SetTimeScale(1f, slowDownRatio, 1/slowDownRatio);    
+        print("BULLET TIME COMPLETE");
+        canBulletTime = true;
+    }
+
+    private IEnumerator DashWait(float waitTime){
         canDash = false;
-        yield return new WaitForSeconds(0.4f);
+        moveSpeed = baseSpeed * 2.5f;
+        yield return new WaitForSeconds(waitTime * waitTimeMultiplier);
         moveSpeed = baseSpeed;
         canDash = true;
     }
