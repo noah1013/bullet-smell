@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
-    [SerializeField] private float moveSpeed = 500f;
+    [SerializeField] private float moveSpeed;
     private float baseSpeed;
     private float slowDownRatio = 5f;
     private float waitTimeMultiplier;
@@ -15,14 +15,14 @@ public class PlayerMovement : MonoBehaviour
 
     Vector2 moveDirection = Vector2.zero;
     private InputAction move;
-    private InputAction sprintPress;
-    private InputAction sprintRelease;
+    private InputAction sneakPress;
+    private InputAction sneakRelease;
     private InputAction dash;
     private InputAction bulletTime;
     
 
     private bool canDash;
-    private bool isSprinting;
+    private bool isSneaking;
     private bool canBulletTime;
 
     private void Awake()
@@ -35,13 +35,13 @@ public class PlayerMovement : MonoBehaviour
         move = playerControls.Player.Move;
         move.Enable();
 
-        sprintPress = playerControls.Player.SprintPress;
-        sprintPress.Enable();
-        sprintPress.performed += SprintPress;
+        sneakPress = playerControls.Player.SneakPress;
+        sneakPress.Enable();
+        sneakPress.performed += SneakPress;
 
-        sprintRelease = playerControls.Player.SprintRelease;
-        sprintRelease.Enable();
-        sprintRelease.performed += SprintRelease;
+        sneakRelease = playerControls.Player.SneakRelease;
+        sneakRelease.Enable();
+        sneakRelease.performed += SneakRelease;
 
         dash = playerControls.Player.Dash;
         dash.Enable();
@@ -56,8 +56,8 @@ public class PlayerMovement : MonoBehaviour
     {
         playerControls.Enable();
         move.Disable();
-        sprintPress.Disable();
-        sprintRelease.Disable();
+        sneakPress.Disable();
+        sneakRelease.Disable();
         dash.Disable();
         bulletTime.Disable();
     }
@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
     {
         canDash = true;
         canBulletTime = true;
-        isSprinting = false;
+        isSneaking = false;
         waitTimeMultiplier = 1f;
         baseSpeed = moveSpeed;
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, -90.0f);
@@ -93,17 +93,21 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void SprintPress(InputAction.CallbackContext context){
-        if(!isSprinting){
-            isSprinting = true;
-            moveSpeed = baseSpeed * 1.5f;
+    private void SneakPress(InputAction.CallbackContext context){
+        if(!isSneaking
+){
+            isSneaking
+     = true;
+            moveSpeed = baseSpeed * 0.5f;
         }
     }
 
-    private void SprintRelease(InputAction.CallbackContext context){
-        if(isSprinting){
+    private void SneakRelease(InputAction.CallbackContext context){
+        if(isSneaking
+){
             moveSpeed = baseSpeed;
-            isSprinting = false;
+            isSneaking
+     = false;
         }
     }
 

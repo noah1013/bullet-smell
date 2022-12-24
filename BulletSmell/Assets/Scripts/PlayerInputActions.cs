@@ -46,7 +46,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SprintPress"",
+                    ""name"": ""SneakPress"",
                     ""type"": ""Button"",
                     ""id"": ""7be78280-6073-44c6-8a3f-ab68240fcdf8"",
                     ""expectedControlType"": ""Button"",
@@ -55,7 +55,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SprintRelease"",
+                    ""name"": ""SneakRelease"",
                     ""type"": ""Button"",
                     ""id"": ""6432eb73-c278-4f02-9e49-6b7c35880a4c"",
                     ""expectedControlType"": ""Button"",
@@ -147,7 +147,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SprintPress"",
+                    ""action"": ""SneakPress"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -158,7 +158,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": ""Press(behavior=1)"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SprintRelease"",
+                    ""action"": ""SneakRelease"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -182,8 +182,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
-        m_Player_SprintPress = m_Player.FindAction("SprintPress", throwIfNotFound: true);
-        m_Player_SprintRelease = m_Player.FindAction("SprintRelease", throwIfNotFound: true);
+        m_Player_SneakPress = m_Player.FindAction("SneakPress", throwIfNotFound: true);
+        m_Player_SneakRelease = m_Player.FindAction("SneakRelease", throwIfNotFound: true);
         m_Player_BulletTime = m_Player.FindAction("BulletTime", throwIfNotFound: true);
     }
 
@@ -246,8 +246,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Dash;
-    private readonly InputAction m_Player_SprintPress;
-    private readonly InputAction m_Player_SprintRelease;
+    private readonly InputAction m_Player_SneakPress;
+    private readonly InputAction m_Player_SneakRelease;
     private readonly InputAction m_Player_BulletTime;
     public struct PlayerActions
     {
@@ -255,8 +255,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
-        public InputAction @SprintPress => m_Wrapper.m_Player_SprintPress;
-        public InputAction @SprintRelease => m_Wrapper.m_Player_SprintRelease;
+        public InputAction @SneakPress => m_Wrapper.m_Player_SneakPress;
+        public InputAction @SneakRelease => m_Wrapper.m_Player_SneakRelease;
         public InputAction @BulletTime => m_Wrapper.m_Player_BulletTime;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -273,12 +273,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
-                @SprintPress.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprintPress;
-                @SprintPress.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprintPress;
-                @SprintPress.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprintPress;
-                @SprintRelease.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprintRelease;
-                @SprintRelease.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprintRelease;
-                @SprintRelease.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprintRelease;
+                @SneakPress.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSneakPress;
+                @SneakPress.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSneakPress;
+                @SneakPress.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSneakPress;
+                @SneakRelease.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSneakRelease;
+                @SneakRelease.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSneakRelease;
+                @SneakRelease.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSneakRelease;
                 @BulletTime.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBulletTime;
                 @BulletTime.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBulletTime;
                 @BulletTime.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBulletTime;
@@ -292,12 +292,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
-                @SprintPress.started += instance.OnSprintPress;
-                @SprintPress.performed += instance.OnSprintPress;
-                @SprintPress.canceled += instance.OnSprintPress;
-                @SprintRelease.started += instance.OnSprintRelease;
-                @SprintRelease.performed += instance.OnSprintRelease;
-                @SprintRelease.canceled += instance.OnSprintRelease;
+                @SneakPress.started += instance.OnSneakPress;
+                @SneakPress.performed += instance.OnSneakPress;
+                @SneakPress.canceled += instance.OnSneakPress;
+                @SneakRelease.started += instance.OnSneakRelease;
+                @SneakRelease.performed += instance.OnSneakRelease;
+                @SneakRelease.canceled += instance.OnSneakRelease;
                 @BulletTime.started += instance.OnBulletTime;
                 @BulletTime.performed += instance.OnBulletTime;
                 @BulletTime.canceled += instance.OnBulletTime;
@@ -309,8 +309,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
-        void OnSprintPress(InputAction.CallbackContext context);
-        void OnSprintRelease(InputAction.CallbackContext context);
+        void OnSneakPress(InputAction.CallbackContext context);
+        void OnSneakRelease(InputAction.CallbackContext context);
         void OnBulletTime(InputAction.CallbackContext context);
     }
 }

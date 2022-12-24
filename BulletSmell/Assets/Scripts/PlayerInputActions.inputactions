@@ -24,7 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SprintPress",
+                    "name": "SneakPress",
                     "type": "Button",
                     "id": "7be78280-6073-44c6-8a3f-ab68240fcdf8",
                     "expectedControlType": "Button",
@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SprintRelease",
+                    "name": "SneakRelease",
                     "type": "Button",
                     "id": "6432eb73-c278-4f02-9e49-6b7c35880a4c",
                     "expectedControlType": "Button",
@@ -125,7 +125,7 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "SprintPress",
+                    "action": "SneakPress",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -136,7 +136,7 @@
                     "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "",
-                    "action": "SprintRelease",
+                    "action": "SneakRelease",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
