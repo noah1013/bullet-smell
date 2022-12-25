@@ -6,10 +6,11 @@ public class BulletPool : MonoBehaviour
 {
 
     public static BulletPool bulletPoolInstance;
+    
 
     [SerializeField]
     private GameObject pooledBullet;
-    private bool notEnoughBulletsInPool = true;
+    //private bool notEnoughBulletsInPool = true;
 
     private List<GameObject> bullets;
 
@@ -26,7 +27,7 @@ public class BulletPool : MonoBehaviour
 
     public GameObject GetBullet()
     {
-        if(bullets.Count > 0)
+        /*if(bullets.Count > 0)
             {
                 for (int i = 0; i < bullets.Count; i++)
                 {
@@ -36,14 +37,16 @@ public class BulletPool : MonoBehaviour
                     }
                 }
             }
-
+       
         if (notEnoughBulletsInPool)
         {
             GameObject bul = Instantiate(pooledBullet);
             bul.SetActive(false);
             bullets.Add(bul);
             return bul;
-        }
-        return null;
+        }*/
+        GameObject bul = Instantiate(pooledBullet);
+
+        return bul;
     }
 }

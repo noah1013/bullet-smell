@@ -31,7 +31,7 @@ public class Bullet : MonoBehaviour
 
     private void Destroy()
     {
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
     private void OnDisable()
@@ -43,7 +43,7 @@ public class Bullet : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 }

@@ -9,6 +9,7 @@ public class EnemyMovement : MonoBehaviour
     private float moveSpeed;
     private bool moveRight;
     private Vector2 originalPos;
+    
 
     // Start is called before the first frame update
     void Start()
