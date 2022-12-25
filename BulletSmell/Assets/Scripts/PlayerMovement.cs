@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
     [SerializeField] private float moveSpeed = 500f;
+    [SerializeField] private GameObject background;
+    [SerializeField] private GameObject BTbackground;
     private float baseSpeed;
     private float slowDownRatio = 5f;
     private float waitTimeMultiplier;
@@ -156,8 +158,12 @@ public class PlayerMovement : MonoBehaviour
         float tempBaseSpeed = baseSpeed;   
         SetTimeScale((1/slowDownRatio), (1/slowDownRatio), slowDownRatio);
         print("BULLET TIME ACTIVE (PLAYER NOT AFFECTED)");
+        background.SetActive(false);
+        BTbackground.SetActive(true);
         yield return new WaitForSeconds(1); //Replace with meter but for now have a timer coroutine
-        SetTimeScale(1f, slowDownRatio, 1/slowDownRatio);    
+        SetTimeScale(1f, slowDownRatio, 1/slowDownRatio);
+        background.SetActive(true);
+        BTbackground.SetActive(false);
         print("BULLET TIME COMPLETE");
         StartCoroutine(RegenerateBulletTime());
     }
