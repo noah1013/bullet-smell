@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    // movement
     private Vector2 moveDirection;
     private float moveSpeed;
+    // game mechanics
+    private int attackPower = 1;
+    private bool fromPlayer = false;
 
     private void OnEnable()
     {
@@ -41,10 +46,15 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" ^ fromPlayer)
         {
+
+            if (other.gameObject.TryGetComponent<EntityHealth>(out EntityHealth entityHealthComponent))
+            {
+                entityHealthComponent.TakeDamage(attackPower);
+            }
+
             Destroy(gameObject);
         }
     }
 }
-
