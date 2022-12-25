@@ -8,12 +8,14 @@ using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
-    [SerializeField] private float moveSpeed = 500f;
     [SerializeField] private GameObject background;
     [SerializeField] private GameObject BTbackground;
     private float baseSpeed;
     private float slowDownRatio = 5f;
+    public float moveSpeed = 500f;
+    public float baseSpeed;
     private float waitTimeMultiplier;
+    private float angle;
     public PlayerInputActions playerControls;
     Scene scene;
 
@@ -21,13 +23,10 @@ public class PlayerMovement : MonoBehaviour
     private InputAction move;
     private InputAction sneakPress;
     private InputAction sneakRelease;
-    private InputAction dash;
-    private InputAction bulletTime;
-    
+    private InputAction dash;    
 
     private bool canDash;
     private bool isSneaking;
-    private bool canBulletTime;
 
     private void Awake()
     {
@@ -50,10 +49,6 @@ public class PlayerMovement : MonoBehaviour
         dash = playerControls.Player.Dash;
         dash.Enable();
         dash.performed += Dash;
-
-        bulletTime = playerControls.Player.BulletTime;
-        bulletTime.Enable();
-        bulletTime.performed += BulletTime;
     }
 
     private void OnDisable()
@@ -63,14 +58,12 @@ public class PlayerMovement : MonoBehaviour
         sneakPress.Disable();
         sneakRelease.Disable();
         dash.Disable();
-        bulletTime.Disable();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         canDash = true;
-        canBulletTime = true;
         isSneaking = false;
         waitTimeMultiplier = 1f;
         baseSpeed = moveSpeed;
@@ -118,16 +111,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void BulletTime(InputAction.CallbackContext context){
-        if(canBulletTime){
-            StartCoroutine(BulletTimeWait());
-        }
-    }
-
     private void ChangePlayerRotation(){
         Vector3 mouse = new Vector3(Input.mousePosition.x - (Screen.width / 2), Input.mousePosition.y - (Screen.height / 2), 0);
         float hypotenuse = Vector3.Distance(mouse, new Vector3(0.0f, 0.0f, 0.0f));
-        float angle = GetAngle(hypotenuse, mouse.x);
+        angle = GetAngle(hypotenuse, mouse.x);
 
         if(mouse.y < 0)
             angle *= -1;
