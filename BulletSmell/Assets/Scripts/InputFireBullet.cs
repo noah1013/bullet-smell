@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireBullet : MonoBehaviour //Spreadshot
+public class InputFireBullet : MonoBehaviour //Spreadshot
 {
     public SpriteRenderer spriteRenderer;
     public Sprite ShootSprite;

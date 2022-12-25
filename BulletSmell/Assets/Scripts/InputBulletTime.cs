@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BulletTime : MonoBehaviour
+public class InputBulletTime : MonoBehaviour
 {
     [SerializeField] private GameObject background;
-    [SerializeField] private GameObject BTbackground;
+    [SerializeField] private GameObject backgroundBulletTime;
     public PlayerInputActions playerControls;
     private InputAction bulletTime;
     private float waitTimeMultiplier;   
@@ -59,11 +59,11 @@ public class BulletTime : MonoBehaviour
         SetTimeScale((1/slowDownRatio), (1/slowDownRatio), slowDownRatio);
         print("BULLET TIME ACTIVE (PLAYER NOT AFFECTED)");
         background.SetActive(false);
-        BTbackground.SetActive(true);
+        backgroundBulletTime.SetActive(true);
         yield return new WaitForSeconds(1); //Replace with meter but for now have a timer coroutine
         SetTimeScale(1f, slowDownRatio, 1/slowDownRatio);
         background.SetActive(true);
-        BTbackground.SetActive(false);
+        backgroundBulletTime.SetActive(false);
         print("BULLET TIME COMPLETE");
         StartCoroutine(RegenerateBulletTime());
     }

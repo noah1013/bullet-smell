@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class BulletInstantiate : MonoBehaviour
 {
-
     public static BulletInstantiate bulletInstance;
-    
 
     [SerializeField]
     private GameObject bullet;
