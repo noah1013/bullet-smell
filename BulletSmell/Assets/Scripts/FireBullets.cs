@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class FireBullets : MonoBehaviour
 {
+    public SpriteRenderer spriteRenderer;
+    public Sprite ShootSprite;
+    public Sprite IdleSprite;
+
 
     [SerializeField]
     private int bulletsAmount = 10;
@@ -16,11 +20,25 @@ public class FireBullets : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         InvokeRepeating("Fire", 0f, 2f);
+        //Invoke("ChangeSprite", 2f);
+    }
+
+    void ChangeSprite()
+    {
+        spriteRenderer.sprite = ShootSprite;
+    }
+
+    void revertSprite()
+    {
+        spriteRenderer.sprite = IdleSprite;
     }
 
     private void Fire()
     {
+        ChangeSprite();
+        Invoke("revertSprite", 0.5f);
         float angleStep = (endAngle - startAngle) / bulletsAmount;
         float angle = startAngle;
 
