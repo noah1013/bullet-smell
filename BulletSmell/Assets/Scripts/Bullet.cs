@@ -48,7 +48,7 @@ public class Bullet : MonoBehaviour
             {
                 entityHealthComponent.TakeDamage(attackPower);
             }
-
+            Debug.Log("You got hit!");
             Destroy(gameObject);
         }
     }

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoubleSpiral : MonoBehaviour
+public class BP2 : MonoBehaviour //Double Spiral Pattern
 {
-
+    
     private float angle = 0f;
 
     private Vector2 bulletMoveDirection;
@@ -12,7 +12,7 @@ public class DoubleSpiral : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("Fire", 0f, 0.1f);
+        InvokeRepeating("Fire", 0f, 0.3f);
     }
 
     private void Fire()
