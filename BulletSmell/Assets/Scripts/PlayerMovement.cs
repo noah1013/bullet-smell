@@ -83,6 +83,10 @@ public class PlayerMovement : MonoBehaviour
         if(scene.buildIndex == 0){
             ChangePlayerRotation();                    //Player rotation
         }        
+        else{
+            transform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+        }
+        
     }
 
     void FixedUpdate()
@@ -125,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
 
         if(mouse.y < 0)
             angle *= -1;
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, angle -90);
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, angle - 90);
     }
 
     private float GetAngle(float hypotenuse, float adjacent){
