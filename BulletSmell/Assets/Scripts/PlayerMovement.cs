@@ -3,15 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
-    [SerializeField] private float moveSpeed;
+    [SerializeField] private float moveSpeed = 500f;
     private float baseSpeed;
     private float slowDownRatio = 5f;
     private float waitTimeMultiplier;
     public PlayerInputActions playerControls;
+    Scene scene;
 
     Vector2 moveDirection = Vector2.zero;
     private InputAction move;
@@ -70,21 +72,24 @@ public class PlayerMovement : MonoBehaviour
         isSneaking = false;
         waitTimeMultiplier = 1f;
         baseSpeed = moveSpeed;
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, -90.0f);
+        scene = SceneManager.GetActiveScene();
+    
     }
 
     // Update is called once per frame
     void Update()
     {
         moveDirection = move.ReadValue<Vector2>(); //Player movement 
-        ChangePlayerRotation();                    //Player rotation
-        
+        if(scene.buildIndex == 0){
+            ChangePlayerRotation();                    //Player rotation
+        }        
     }
 
     void FixedUpdate()
     {
-        rb.velocity = new Vector2(moveDirection.x * (moveSpeed * Time.deltaTime / Time.timeScale), moveDirection.y * (moveSpeed * Time.deltaTime / Time.timeScale) );
-        //print(rb.velocity);
+        rb.velocity = new Vector2(moveDirection.x * (moveSpeed * Time.deltaTime / Time.timeScale), moveDirection.y * (moveSpeed * Time.deltaTime / Time.timeScale));
+
+        
     }
 
     void Dash(InputAction.CallbackContext context){
@@ -94,20 +99,16 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void SneakPress(InputAction.CallbackContext context){
-        if(!isSneaking
-){
-            isSneaking
-     = true;
+        if(!isSneaking){
+            isSneaking = true;
             moveSpeed = baseSpeed * 0.5f;
         }
     }
 
     private void SneakRelease(InputAction.CallbackContext context){
-        if(isSneaking
-){
+        if(isSneaking){
             moveSpeed = baseSpeed;
-            isSneaking
-     = false;
+            isSneaking = false;
         }
     }
 
@@ -154,6 +155,12 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(1); //Replace with meter but for now have a timer coroutine
         SetTimeScale(1f, slowDownRatio, 1/slowDownRatio);    
         print("BULLET TIME COMPLETE");
+        StartCoroutine(RegenerateBulletTime());
+    }
+
+    private IEnumerator RegenerateBulletTime(){
+        yield return new WaitForSeconds(4); 
+        print("You can now use bullet time again");
         canBulletTime = true;
     }
 
