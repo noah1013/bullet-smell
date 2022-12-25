@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireBullets : MonoBehaviour
+public class FireBullet : MonoBehaviour //Spreadshot
 {
     public SpriteRenderer spriteRenderer;
     public Sprite ShootSprite;
@@ -50,7 +50,7 @@ public class FireBullets : MonoBehaviour
             Vector3 bulMoveVector = new Vector3(bulDirX, bulDirY, 0f);
             Vector2 bulDir = (bulMoveVector - transform.position).normalized;
 
-            GameObject bul = BulletPool.bulletPoolInstance.GetBullet();
+            GameObject bul = BulletInstantiate.bulletInstance.GetBullet();
             bul.transform.position = transform.position;
             bul.transform.rotation = transform.rotation;
             bul.SetActive(true);

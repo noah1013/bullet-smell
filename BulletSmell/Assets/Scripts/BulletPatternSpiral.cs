@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BP2 : MonoBehaviour //Double Spiral Pattern
+public class BulletPatternSpiral : MonoBehaviour //Double Spiral Pattern
 {
     
     private float angle = 0f;
@@ -25,7 +25,7 @@ public class BP2 : MonoBehaviour //Double Spiral Pattern
             Vector3 bulMoveVector = new Vector3(bulDirX, bulDirY, 0f);
             Vector2 bulDir = (bulMoveVector - transform.position).normalized;
 
-            GameObject bul = BulletPool.bulletPoolInstance.GetBullet();
+            GameObject bul = BulletInstantiate.bulletInstance.GetBullet();
             bul.transform.position = transform.position;
             bul.transform.rotation = transform.rotation;
             bul.SetActive(true);

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotateObject : MonoBehaviour
+public class EntityRotate : MonoBehaviour
 {
     //THIS IS A TEST SCRIPT TO VIEW THE EFFETS OF THE BULLET TIME MECHANIC
 

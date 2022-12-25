@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BP1 : MonoBehaviour //Spreadshot
+public class BulletPatternSpread : MonoBehaviour
 {
     public SpriteRenderer spriteRenderer;
     public Sprite ShootSprite;
@@ -10,7 +10,7 @@ public class BP1 : MonoBehaviour //Spreadshot
 
 
     [SerializeField]
-    private int bulletsAmount = 10;
+    private int bulletAmount = 10;
 
     [SerializeField]
     private float startAngle = 90f, endAngle = 270f;
@@ -39,10 +39,10 @@ public class BP1 : MonoBehaviour //Spreadshot
     {
         ChangeSprite();
         Invoke("revertSprite", 0.5f);
-        float angleStep = (endAngle - startAngle) / bulletsAmount;
+        float angleStep = (endAngle - startAngle) / bulletAmount;
         float angle = startAngle;
 
-        for (int i = 0; i < bulletsAmount + 1; i++)
+        for (int i = 0; i < bulletAmount + 1; i++)
         {
             float bulDirX = transform.position.x + Mathf.Sin((angle * Mathf.PI) / 180f);
             float bulDirY = transform.position.y + Mathf.Cos((angle * Mathf.PI) / 180f);
@@ -50,7 +50,7 @@ public class BP1 : MonoBehaviour //Spreadshot
             Vector3 bulMoveVector = new Vector3(bulDirX, bulDirY, 0f);
             Vector2 bulDir = (bulMoveVector - transform.position).normalized;
 
-            GameObject bul = BulletPool.bulletPoolInstance.GetBullet();
+            GameObject bul = BulletInstantiate.bulletInstance.GetBullet();
             bul.transform.position = transform.position;
             bul.transform.rotation = transform.rotation;
             bul.SetActive(true);
