@@ -38,5 +38,13 @@ public class Bullet : MonoBehaviour
     {
         CancelInvoke();
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Player")
+        {
+            gameObject.SetActive(false);
+        }
+    }
 }
 

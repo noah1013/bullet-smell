@@ -8,22 +8,26 @@ public class EnemyMovement : MonoBehaviour
 {
     private float moveSpeed;
     private bool moveRight;
+    private Vector2 originalPos;
+
     // Start is called before the first frame update
     void Start()
     {
+        originalPos = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
         moveSpeed = 2f;
         moveRight = true;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.x > 3f)
+        if (transform.position.x > originalPos.x + 3)
         {
             moveRight = false;
         }
 
-        else if (transform.position.x < -3f)
+        else if (transform.position.x < originalPos.x - 3)
         {
             moveRight = true;
         }
