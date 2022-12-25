@@ -39,11 +39,6 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnDisable()
-    {
-        CancelInvoke();
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player" ^ fromPlayer)
