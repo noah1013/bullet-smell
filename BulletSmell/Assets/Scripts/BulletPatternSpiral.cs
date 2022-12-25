@@ -7,12 +7,10 @@ public class BulletPatternSpiral : MonoBehaviour //Double Spiral Pattern
     
     private float angle = 0f;
 
-    private Vector2 bulletMoveDirection;
-
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("Fire", 0f, 0.3f);
+        InvokeRepeating("Fire", 0.3f, 0.3f);
     }
 
     private void Fire()
@@ -29,7 +27,7 @@ public class BulletPatternSpiral : MonoBehaviour //Double Spiral Pattern
             bul.transform.position = transform.position;
             bul.transform.rotation = transform.rotation;
             bul.SetActive(true);
-            bul.GetComponent<Bullet>().SetMoveDirection(bulDir);
+            bul.GetComponent<Bullet>().SetMovementVariables(bulDir, 5f, -0.5f, 60f, -10f);
         }
 
         angle += 10f;

@@ -54,7 +54,7 @@ public class BulletPatternSpread : MonoBehaviour
             bul.transform.position = transform.position;
             bul.transform.rotation = transform.rotation;
             bul.SetActive(true);
-            bul.GetComponent<Bullet>().SetMoveDirection(bulDir);
+            bul.GetComponent<Bullet>().SetMovementVariables(bulDir, 8f, -3f, 60f, -10f, true);
 
             angle += angleStep;
         }
