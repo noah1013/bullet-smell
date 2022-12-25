@@ -542,6 +542,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2882309788559579434, guid: aed8abb883422ac44be323fb1f71d523, type: 3}
+      propertyPath: background
+      value: 
+      objectReference: {fileID: 1454514844}
+    - target: {fileID: 2882309788559579434, guid: aed8abb883422ac44be323fb1f71d523, type: 3}
+      propertyPath: BTbackground
+      value: 
+      objectReference: {fileID: 2030765507}
     - target: {fileID: 5624468680928873568, guid: aed8abb883422ac44be323fb1f71d523, type: 3}
       propertyPath: m_Name
       value: Player
@@ -967,6 +975,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Background
       objectReference: {fileID: 0}
+    - target: {fileID: 4282067628834155773, guid: ad16d221b7cb4bf4fa01e3ccf209e285, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4282067628834155774, guid: ad16d221b7cb4bf4fa01e3ccf209e285, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -987,6 +999,10 @@ PrefabInstance:
     - target: {fileID: 3495252395971026263, guid: aaec0720c94e4ea44a407aa196f6b089, type: 3}
       propertyPath: m_Name
       value: BTBackground
+      objectReference: {fileID: 0}
+    - target: {fileID: 3495252395971026263, guid: aaec0720c94e4ea44a407aa196f6b089, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5660859742317216066, guid: aaec0720c94e4ea44a407aa196f6b089, type: 3}
       propertyPath: m_RootOrder

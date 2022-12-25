@@ -8,10 +8,6 @@ using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
-    [SerializeField] private GameObject background;
-    [SerializeField] private GameObject BTbackground;
-    private float baseSpeed;
-    private float slowDownRatio = 5f;
     public float moveSpeed = 500f;
     public float baseSpeed;
     private float waitTimeMultiplier;
@@ -138,27 +134,6 @@ public class PlayerMovement : MonoBehaviour
         baseSpeed *= newBaseSpeed;
         moveSpeed = baseSpeed;
         waitTimeMultiplier *= deltaTime;
-    }
-
-    private IEnumerator BulletTimeWait(){
-        canBulletTime = false;
-        float tempBaseSpeed = baseSpeed;   
-        SetTimeScale((1/slowDownRatio), (1/slowDownRatio), slowDownRatio);
-        print("BULLET TIME ACTIVE (PLAYER NOT AFFECTED)");
-        background.SetActive(false);
-        BTbackground.SetActive(true);
-        yield return new WaitForSeconds(1); //Replace with meter but for now have a timer coroutine
-        SetTimeScale(1f, slowDownRatio, 1/slowDownRatio);
-        background.SetActive(true);
-        BTbackground.SetActive(false);
-        print("BULLET TIME COMPLETE");
-        StartCoroutine(RegenerateBulletTime());
-    }
-
-    private IEnumerator RegenerateBulletTime(){
-        yield return new WaitForSeconds(4); 
-        print("You can now use bullet time again");
-        canBulletTime = true;
     }
 
     private IEnumerator DashWait(float waitTime){
