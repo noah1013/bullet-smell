@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30a7102c1f87d6241be73a9f88a3bc57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pooledBullet: {fileID: 4398073409284530561, guid: 238767256e0c5424f93b313bd39f1828, type: 3}
+  pooledBullet: {fileID: 4398073409284530561, guid: 9a02d6b99796ca84ab2081341266be02, type: 3}
